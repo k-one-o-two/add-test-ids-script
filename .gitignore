@@ -1,0 +1,7 @@
+.idea/*
+node_modules
+*-lock.json
+/input/*/**
+/output/*/**
+/input/
+/output/
