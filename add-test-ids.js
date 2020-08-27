@@ -21,7 +21,8 @@ const writeFile = (filePath, source) => {
   if (!fs.existsSync(folderPath)) {
     fs.mkdirSync(folderPath, { recursive: true });
   }
-  fs.writeFileSync(filePath, source, { encoding: 'utf-8' });
+  const crlfToLf = (str) => str.replace(/\r\n/gm, "\n")
+  fs.writeFileSync(filePath, crlfToLf(source), { encoding: 'utf-8' });
 };
 
 /**
