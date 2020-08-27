@@ -7,8 +7,8 @@ const { MY_TAGS, HTML_TAGS } = require("./transforms/constants");
 /** @typedef {{ source: string; path: string; name: string; }} InputFile*/
 
 // EDIT these two to your choice
-const INPUT_FOLDER = path.join(__dirname, "input");
-const OUTPUT_FOLDER = path.join(__dirname, "output");
+const INPUT_FOLDER = path.join(__dirname, "../TT/frontend");
+const OUTPUT_FOLDER = path.join(__dirname, "../TT/frontend");
 
 const reactFileNaming = /[-_.a-zA-Z]*\.(tsx|jsx)$/;
 const testFileNaming = /[-_.a-zA-Z]*\.test\.(tsx|jsx)$/;
@@ -21,7 +21,7 @@ const writeFile = (filePath, source) => {
   if (!fs.existsSync(folderPath)) {
     fs.mkdirSync(folderPath, { recursive: true });
   }
-  fs.writeFileSync(filePath, Buffer.from(source, "binary"));
+  fs.writeFileSync(filePath, source, { encoding: 'utf-8' });
 };
 
 /**
@@ -40,7 +40,7 @@ const transform = (inputFilePath) => {
 
   /** @type {InputFile} */
   const file = {
-    source: fs.readFileSync(inputFilePath, { encoding: "utf8" }),
+    source: fs.readFileSync(inputFilePath, { encoding: "utf-8" }),
     path: inputFilePath,
     name: kebabCaseName,
   };
