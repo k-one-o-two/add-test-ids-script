@@ -27,6 +27,11 @@ const htmlSymbolNumber = /&#\d{1,10};/;
 const htmlSymbolEntity = /&[a-z]{1,10};/;
 const chineseChars = /\p{Script=Han}+/gu;
 
+/* HACK !
+* jscodeshift removes html entities such as &nbsp; &emsp; etc.,
+*  this solution converts those symbols to UCS-2 Chinese symbols,
+*  then converts them back
+ */
 const registeredSymbols = {};
 const toChinese = (symbol) => {
   const encrypted = Buffer.from(symbol).toString("ucs2");
@@ -72,7 +77,6 @@ const transform = (inputFilePath) => {
     name: kebabCaseName,
   };
 
-  // addTestIdsForMyHtmlTags, addTestIdsForNativeHtmlTags - to which html tags tey add test-id's is described in /transforms/constants.js
   /** @type {Buffer} */
   const outputSource = addTestIds(
     file,
