@@ -19,9 +19,17 @@ function addTestIds(file, j, htmlTagList, testAttribute = "data-test-id") {
       (attribute) => attribute?.name?.name === testAttribute
     );
 
-  let i = 0;
+  const memo = {}
   /** @type {function(el: import('jscodeshift).Node): string}*/
-  const testIdName = (el) => file.name + `--${el.name.name}-`;
+  const testIdName = (el) => {
+    const name = file.name + `--${el.name.name}-`;
+    if (memo[name] !== undefined) {
+      memo[name]++;
+    } else {
+      memo[name] = 0;
+    }
+    return name + memo[name]
+  };
 
   /** @type {import("jscodeshift").Collection} Collection */
   const jsxElements = j(file.source).find(j.JSXElement);
@@ -39,7 +47,7 @@ function addTestIds(file, j, htmlTagList, testAttribute = "data-test-id") {
                 openingElement.attributes.concat(
                   j.jsxAttribute(
                     j.jsxIdentifier(testAttribute),
-                    j.literal(testIdName(openingElement) + i++)
+                    j.literal(testIdName(openingElement))
                   )
                 ),
                 openingElement.selfClosing
