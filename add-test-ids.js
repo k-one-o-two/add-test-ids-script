@@ -23,6 +23,22 @@ const reactFileNaming = /[-_.a-zA-Z]*\.(tsx|jsx)$/;
 const testFileNaming = /[-_.a-zA-Z]*\.test\.(tsx|jsx)$/;
 const reactExtension = /\.(tsx|jsx)/;
 const capitalLetters = /[A-Z]/g;
+const htmlSymbolNumber = /&#\d{1,10};/;
+const htmlSymbolEntity = /&[a-z]{1,10};/;
+const chineseChars = /\p{Script=Han}+/gu;
+
+const registeredSymbols = {};
+const toChinese = (symbol) => {
+  const encrypted = Buffer.from(symbol).toString("ucs2");
+  registeredSymbols[encrypted] = symbol;
+  return encrypted;
+};
+
+const encryptSymbol = (str) =>
+  str.replace(htmlSymbolEntity, toChinese).replace(htmlSymbolNumber, toChinese);
+
+const decryptSymbol = (str) =>
+  str.replace(chineseChars, (symbol) => registeredSymbols[symbol]);
 
 const writeFile = (filePath, source) => {
   const folderPath = filePath.replace(reactFileNaming, "");
@@ -30,9 +46,7 @@ const writeFile = (filePath, source) => {
   if (!fs.existsSync(folderPath)) {
     fs.mkdirSync(folderPath, { recursive: true });
   }
-  const crlfToLf = (str) => str.replace(/\r\n/gm, "\n");
-
-  fs.writeFileSync(filePath, crlfToLf(source), { encoding: "utf-8" });
+  fs.writeFileSync(filePath, source, { encoding: "utf-8" });
 };
 
 /**
@@ -51,7 +65,9 @@ const transform = (inputFilePath) => {
 
   /** @type {InputFile} */
   const file = {
-    source: fs.readFileSync(inputFilePath, { encoding: "utf-8" }),
+    source: encryptSymbol(
+      fs.readFileSync(inputFilePath, { encoding: "utf-8" })
+    ),
     path: inputFilePath,
     name: kebabCaseName,
   };
@@ -64,9 +80,9 @@ const transform = (inputFilePath) => {
     useAllHtmlTags ? HTML_TAGS : MY_TAGS,
     customAttribute
   );
-
   const outputFilePath = inputFilePath.replace(INPUT_FOLDER, OUTPUT_FOLDER);
-  writeFile(outputFilePath, outputSource);
+
+  writeFile(outputFilePath, decryptSymbol(outputSource));
 };
 
 const isFolder = (dir) => fs.lstatSync(dir).isDirectory();

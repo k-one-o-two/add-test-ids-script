@@ -7,7 +7,7 @@ const HTML_TAGS = [
 ];
 const MY_TAGS = [
   'button',
-  'form', 'iframe', 'img', 'input',
+  'form', 'iframe', 'i', 'img', 'input',
   'label', 'option', 'table', 'tbody', 'thead'
 ];
 

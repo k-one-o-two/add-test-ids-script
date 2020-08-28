@@ -19,7 +19,7 @@ function addTestIds(file, j, htmlTagList, testAttribute = "data-test-id") {
       (attribute) => attribute?.name?.name === testAttribute
     );
 
-  const memo = {}
+  const memo = {};
   /** @type {function(el: import('jscodeshift).Node): string}*/
   const testIdName = (el) => {
     const name = file.name + `--${el.name.name}-`;
@@ -28,7 +28,7 @@ function addTestIds(file, j, htmlTagList, testAttribute = "data-test-id") {
     } else {
       memo[name] = 0;
     }
-    return name + memo[name]
+    return name + memo[name];
   };
 
   /** @type {import("jscodeshift").Collection} Collection */
@@ -59,7 +59,7 @@ function addTestIds(file, j, htmlTagList, testAttribute = "data-test-id") {
         }
       }
     })
-    .toSource();
+    .toSource({ lineTerminator: "\n", trailingComma: true });
 }
 
 module.exports.addTestIds = addTestIds;
