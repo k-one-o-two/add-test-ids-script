@@ -8,3 +8,15 @@
     * or by changing variables `INPUT_FOLDER`, `OUTPUT_FOLDER` to point to your input & output destination
 (files can be overridden, so the input & output paths can be the same)
     * or you can copy-paste a `.jsx/.tsx` file to `/input` folder, then do `npm run start` 
+
+#### Example:
+>example file before: [input/exampleApp.component.tsx](input/exampleApp.component.tsx)
+>
+> do `npm run start`
+>
+>example file after: [output/exampleApp.component.tsx](output/exampleApp.component.tsx)
+
+##### To what HTML elements test-id's are assigned?
+Script has two lists of html elements/tags, described in [this file](transforms/constants.js): 
+* custom list of your joice `MY_TAGS` - picked by default
+* all HTML tags `HTML_TAGS` - picked when running with `--all` flag
