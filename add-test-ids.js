@@ -10,6 +10,8 @@ const CUSTOM_IO_FOLDER = process.argv
   .find(s => s.includes('io-dir='))
   ?.split('io-dir=')[1];
 
+const useAllHtmlTags = process.argv.includes('--all')
+
 const INPUT_FOLDER = path.join(__dirname, CUSTOM_IO_FOLDER || "input");
 const OUTPUT_FOLDER = path.join(__dirname, CUSTOM_IO_FOLDER || "output");
 
@@ -51,7 +53,7 @@ const transform = (inputFilePath) => {
 
   // addTestIdsForMyHtmlTags, addTestIdsForNativeHtmlTags - to which html tags tey add test-id's is described in /transforms/constants.js
   /** @type {Buffer} */
-  const outputSource = addTestIds(file, j.withParser("tsx"), MY_TAGS);
+  const outputSource = addTestIds(file, j.withParser("tsx"), useAllHtmlTags ? HTML_TAGS : MY_TAGS);
 
   const outputFilePath = inputFilePath.replace(INPUT_FOLDER, OUTPUT_FOLDER);
   writeFile(outputFilePath, outputSource);

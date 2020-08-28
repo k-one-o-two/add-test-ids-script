@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node add-test-ids.js",
     "start:inspect": "node --inspect-brk add-test-ids.js",
-    "start:custom": "node add-test-ids.js io-dir=../my/target_react_app"
+    "start:custom": "node add-test-ids.js io-dir=../my/react-app"
   },
   "author": "",
   "license": "ISC",
