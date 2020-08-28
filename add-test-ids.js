@@ -6,9 +6,12 @@ const { MY_TAGS, HTML_TAGS } = require("./transforms/constants");
 
 /** @typedef {{ source: string; path: string; name: string; }} InputFile*/
 
-// EDIT these two to your choice
-const INPUT_FOLDER = path.join(__dirname, "../TT/frontend");
-const OUTPUT_FOLDER = path.join(__dirname, "../TT/frontend");
+const CUSTOM_IO_FOLDER = process.argv
+  .find(s => s.includes('io-dir='))
+  ?.split('io-dir=')[1];
+
+const INPUT_FOLDER = path.join(__dirname, CUSTOM_IO_FOLDER || "input");
+const OUTPUT_FOLDER = path.join(__dirname, CUSTOM_IO_FOLDER || "output");
 
 const reactFileNaming = /[-_.a-zA-Z]*\.(tsx|jsx)$/;
 const testFileNaming = /[-_.a-zA-Z]*\.test\.(tsx|jsx)$/;
