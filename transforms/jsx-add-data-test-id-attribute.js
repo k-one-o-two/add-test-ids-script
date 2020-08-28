@@ -21,7 +21,7 @@ function addTestIds(file, j, htmlTagList, testAttribute = "data-test-id") {
 
   let i = 0;
   /** @type {function(el: import('jscodeshift).Node): string}*/
-  const testIdName = (el) => file.name + `_${el.name.name}_`;
+  const testIdName = (el) => file.name + `--${el.name.name}-`;
 
   /** @type {import("jscodeshift").Collection} Collection */
   const jsxElements = j(file.source).find(j.JSXElement);

@@ -5,12 +5,12 @@ const ExampleAppComponent = () => {
     <main>
       <h1>Example file to show data-test-id assigning</h1>
       <aside>
-        <table data-test-id="example-app.component_table_0">
-          <thead data-test-id="example-app.component_thead_1">
+        <table data-test-id="example-app.component--table-0">
+          <thead data-test-id="example-app.component--thead-1">
             <th>column 1</th>
             <th>column 2</th>
           </thead>
-          <tbody data-test-id="example-app.component_tbody_2">
+          <tbody data-test-id="example-app.component--tbody-2">
             <tr>
               <td>val a1</td>
               <td>val b1</td>
@@ -22,18 +22,18 @@ const ExampleAppComponent = () => {
           </tbody>
         </table>
       </aside>
-      <form data-test-id="example-app.component_form_3">
-        <img src="" alt="profile picture" data-test-id="example-app.component_img_4" />
-        <input type="text" name="name" data-test-id="example-app.component_input_5">
-          <label data-test-id="example-app.component_label_6">name</label>
+      <form data-test-id="example-app.component--form-3">
+        <img src="" alt="profile picture" data-test-id="example-app.component--img-4" />
+        <input type="text" name="name" data-test-id="example-app.component--input-5">
+          <label data-test-id="example-app.component--label-6">name</label>
         </input>
-        <label for="date-input" data-test-id="example-app.component_label_7">Birth date</label>
+        <label for="date-input" data-test-id="example-app.component--label-7">Birth date</label>
         <input
           id="date-input"
           type="date"
           name="birth date"
-          data-test-id="example-app.component_input_8" />
-        <button type="submit" data-test-id="example-app.component_button_9">submit form</button>
+          data-test-id="example-app.component--input-8" />
+        <button type="submit" data-test-id="example-app.component--button-9">submit form</button>
       </form>
     </main>
   );
