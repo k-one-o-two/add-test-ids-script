@@ -7,15 +7,16 @@ const allNativeAreLowercase = (el) => {
  * @param {InputFile} file
  * @param {typeof import("jscodeshift")} j
  * @param {string[]} htmlTagList
+ * @param {string} testAttribute - default value "data-test-id"
  * */
-function addTestIds(file, j, htmlTagList) {
+function addTestIds(file, j, htmlTagList, testAttribute = "data-test-id") {
   const isHtmlTag = htmlTagList?.length
     ? (el) => htmlTagList.includes(el.name.name)
     : allNativeAreLowercase;
 
   const testIdExists = (openingElement) =>
     openingElement.attributes.some(
-      (attribute) => attribute?.name?.name === "data-test-id"
+      (attribute) => attribute?.name?.name === testAttribute
     );
 
   let i = 0;
@@ -37,7 +38,7 @@ function addTestIds(file, j, htmlTagList) {
                 j.jsxIdentifier(openingElement.name.name),
                 openingElement.attributes.concat(
                   j.jsxAttribute(
-                    j.jsxIdentifier("data-test-id"),
+                    j.jsxIdentifier(testAttribute),
                     j.literal(testIdName(openingElement) + i++)
                   )
                 ),

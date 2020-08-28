@@ -10,6 +10,10 @@ const CUSTOM_IO_FOLDER = process.argv
   .find((s) => s.includes("io-dir="))
   ?.split("io-dir=")[1];
 
+const customAttribute = process.argv
+  .find((s) => s.includes("customAttribute="))
+  ?.split("customAttribute=")[1];
+
 const useAllHtmlTags = process.argv.includes("--all");
 
 const INPUT_FOLDER = path.join(__dirname, CUSTOM_IO_FOLDER || "input");
@@ -57,7 +61,8 @@ const transform = (inputFilePath) => {
   const outputSource = addTestIds(
     file,
     j.withParser("tsx"),
-    useAllHtmlTags ? HTML_TAGS : MY_TAGS
+    useAllHtmlTags ? HTML_TAGS : MY_TAGS,
+    customAttribute
   );
 
   const outputFilePath = inputFilePath.replace(INPUT_FOLDER, OUTPUT_FOLDER);
