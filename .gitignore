@@ -1,7 +1,11 @@
 .idea/*
 node_modules
 *-lock.json
-/input/*/**
-/output/*/**
-/input/
-/output/
+
+# ignore input & output folder content except folder it self & example files
+/input/*
+!/input/
+output/*
+!/output/
+!output/exampleApp.component.tsx
+!input/exampleApp.component.tsx
