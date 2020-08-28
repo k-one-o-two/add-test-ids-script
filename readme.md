@@ -2,11 +2,11 @@
 ### How to use:
 1) do `npm i`
 2)  * run it using `npm run start` or just `node add-test-ids.js`
-    * run using custom a directory `npm run start:custom io-dir=../my/react-app`
+    * run using custom a directory `npm run start io-dir=../my/react-app`
     * assigning test-id's to all html tags 
-`npm run start:custom io-dir=../my/react-app --all`
+`npm run start io-dir=../my/react-app --all`
     * overriding the default `data-test-id` attribute 
-      `npm run start:custom io-dir=../my/react-app --all customAttribute=test-id`
+      `npm run start io-dir=../my/react-app --all customAttribute=test-id`
     * or you can copy-paste a `.jsx/.tsx` file to `/input` folder, then do `npm run start` 
 
 ___
