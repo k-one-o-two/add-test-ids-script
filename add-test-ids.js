@@ -23,27 +23,27 @@ const reactFileNaming = /[-_.a-zA-Z]*\.(tsx|jsx)$/;
 const testFileNaming = /[-_.a-zA-Z]*\.test\.(tsx|jsx)$/;
 const reactExtension = /\.(tsx|jsx)/;
 const capitalLetters = /[A-Z]/g;
-const htmlSymbolNumber = /&#\d{1,10};/;
-const htmlSymbolEntity = /&[a-z]{1,10};/;
-const chineseChars = /\p{Script=Han}+/gu;
+const htmlSymbolNumber = /&#\d{1,10};/g;
+const htmlSymbolEntity = /&[a-z]{1,10};/g;
 
 /* HACK !
 * jscodeshift removes html entities such as &nbsp; &emsp; etc.,
-*  this solution converts those symbols to UCS-2 Chinese symbols,
-*  then converts them back
+*  this solution escapes those symbols, then converts them back
  */
-const registeredSymbols = {};
-const toChinese = (symbol) => {
-  const encrypted = Buffer.from(symbol).toString("ucs2");
-  registeredSymbols[encrypted] = symbol;
-  return encrypted;
+const registeredSymbols = [];
+const toSafeChar = (symbol) => {
+  const escaped = escape(symbol);
+  registeredSymbols.push(escaped)
+  return escaped;
 };
 
-const encryptSymbol = (str) =>
-  str.replace(htmlSymbolEntity, toChinese).replace(htmlSymbolNumber, toChinese);
+const escapeSymbol = (str) =>
+  str.replace(htmlSymbolEntity, toSafeChar).replace(htmlSymbolNumber, toSafeChar);
 
-const decryptSymbol = (str) =>
-  str.replace(chineseChars, (symbol) => registeredSymbols[symbol]);
+const unescapeSymbol = (str) =>
+  registeredSymbols.reduce((result, symbol) => {
+    return result.replace(symbol, unescape(symbol));
+  }, str);
 
 const writeFile = (filePath, source) => {
   const folderPath = filePath.replace(reactFileNaming, "");
@@ -70,7 +70,7 @@ const transform = (inputFilePath) => {
 
   /** @type {InputFile} */
   const file = {
-    source: encryptSymbol(
+    source: escapeSymbol(
       fs.readFileSync(inputFilePath, { encoding: "utf-8" })
     ),
     path: inputFilePath,
@@ -86,7 +86,7 @@ const transform = (inputFilePath) => {
   );
   const outputFilePath = inputFilePath.replace(INPUT_FOLDER, OUTPUT_FOLDER);
 
-  writeFile(outputFilePath, decryptSymbol(outputSource));
+  writeFile(outputFilePath, unescapeSymbol(outputSource));
 };
 
 const isFolder = (dir) => fs.lstatSync(dir).isDirectory();

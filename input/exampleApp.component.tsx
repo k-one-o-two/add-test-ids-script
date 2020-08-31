@@ -12,20 +12,22 @@ const ExampleAppComponent = () => {
           </thead>
           <tbody>
             <tr>
-              <td>val a1</td>
-              <td>val b1</td>
+              <td>val 10 &euro; 20 &cent;</td>
+              <td>val 1 &pound; 98 &cent;</td>
             </tr>
             <tr>
-              <td>val a2</td>
-              <td>val b2</td>
+              <td>val 20 &#8364; 40 &#162;</td>
+              <td>val 1 &#163; 99 &cent;</td>
             </tr>
           </tbody>
         </table>
       </aside>
+      &nbsp;&nbsp;
+      &nbsp;
       <form>
         <img src="" alt="profile picture"/>
         <input type="text" name="name">
-          <label>name</label>
+          <label>&emsp;name</label>
         </input>
         <label for="date-input">Birth date</label>
         <input id="date-input" type="date" name="birth date" />
