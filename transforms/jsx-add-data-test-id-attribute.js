@@ -19,6 +19,12 @@ function addTestIds(file, j, htmlTagList, testAttribute = "data-test-id") {
       (attribute) => attribute?.name?.name === testAttribute
     );
 
+  const existingTestIDs = j(file.source)
+    .find(j.JSXAttribute)
+    .nodes()
+    .filter((node) => node.name.name === testAttribute)
+    .map((node) => node.value.value);
+
   const memo = {};
   /** @type {function(el: import('jscodeshift).Node): string}*/
   const testIdName = (el) => {
@@ -28,7 +34,8 @@ function addTestIds(file, j, htmlTagList, testAttribute = "data-test-id") {
     } else {
       memo[name] = 0;
     }
-    return name + memo[name];
+    const newName = name + memo[name]
+    return existingTestIDs.includes(newName) ? testIdName(el) : newName;
   };
 
   /** @type {import("jscodeshift").Collection} Collection */

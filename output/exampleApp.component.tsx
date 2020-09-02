@@ -30,11 +30,13 @@ const ExampleAppComponent = () => {
           <label data-test-id="example-app.component--label-0">&emsp;name</label>
         </input>
         <label for="date-input" data-test-id="example-app.component--label-1">Birth date</label>
+        <input id="date-input" type="date" name="birth date" data-test-id="example-app.component--input-3" />
+        <input id="date-input" type="date" name="birth date" data-test-id="example-app.component--input-1" />
         <input
           id="date-input"
           type="date"
           name="birth date"
-          data-test-id="example-app.component--input-1" />
+          data-test-id="example-app.component--input-2" />
         <button type="submit" data-test-id="example-app.component--button-0">submit form</button>
       </form>
     </main>

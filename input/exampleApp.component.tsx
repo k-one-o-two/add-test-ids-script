@@ -30,6 +30,8 @@ const ExampleAppComponent = () => {
           <label>&emsp;name</label>
         </input>
         <label for="date-input">Birth date</label>
+        <input id="date-input" type="date" name="birth date" data-test-id="example-app.component--input-3" />
+        <input id="date-input" type="date" name="birth date" data-test-id="example-app.component--input-1" />
         <input id="date-input" type="date" name="birth date" />
         <button type="submit">submit form</button>
       </form>
