@@ -6,7 +6,7 @@ const HTML_TAGS = [
   'u', 'ul',
 ];
 const MY_TAGS = [
-  'button',
+  'a', 'button',
   'form', 'iframe', 'i', 'img', 'input',
   'label', 'option', 'table', 'tbody', 'thead'
 ];
